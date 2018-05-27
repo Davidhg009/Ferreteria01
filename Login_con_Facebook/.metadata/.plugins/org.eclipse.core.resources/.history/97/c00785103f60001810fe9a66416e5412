@@ -1,0 +1,35 @@
+package utils;
+
+import java.util.Arrays;
+
+import com.restfb.DefaultFacebookClient;
+
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.Version;
+import com.restfb.json.JsonObject;
+import com.restfb.types.User;
+
+import beans.UsuarioFacebook;
+
+public class Get_Usuario_fb_detalles {
+
+	public void  Obtener_Datos_Perfil(String accesstoken) {
+		
+		UsuarioFacebook obj_perfil_usuario =new UsuarioFacebook(); 
+	
+		FacebookClient facebookClient=new DefaultFacebookClient(accesstoken,Version.VERSION_2_6);
+		
+		
+		JsonObject fetchObjectsResults =
+				  facebookClient.fetchObjects(Arrays.asList("me"), 
+				           JsonObject.class, Parameter.with("fields","name,id,email,picture"));
+		
+		String temporal=fetchObjectsResults.toString();
+		
+		 obj_perfil_usuario.setNombre_usuario(temporal.substring(temporal.indexOf("\"name\":\"")+8, temporal.indexOf("\",\"id\":\"")));
+		 obj_perfil_usuario.setId(temporal.substring(temporal.indexOf("\"id\":\"")+7, temporal.indexOf("\",\"email\":\"")));
+		 obj_perfil_usuario.setEmail(temporal.substring(temporal.indexOf("\"email\":\"")+10, temporal.indexOf("\",\"picture\":\"")));
+	}
+
+}

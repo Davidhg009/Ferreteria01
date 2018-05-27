@@ -1,0 +1,28 @@
+package utils;
+
+import com.restfb.DefaultFacebookClient;
+
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.Version;
+import com.restfb.types.Page;
+import com.restfb.types.User;
+
+import beans.UsuarioFacebook;
+
+public class Get_Usuario_fb_detalles {
+
+	public UsuarioFacebook  Obtener_Datos_Perfil(String accesstoken) {
+		
+		UsuarioFacebook obj_perfil_usuario =new UsuarioFacebook(); 
+		FacebookClient facebookClient=new DefaultFacebookClient(accesstoken,Version.VERSION_2_6);
+		
+		User user = facebookClient.fetchObject("me", User.class);
+		
+
+		System.out.println("User name: " + user.getName());
+		System.out.println("Page likes: " + page.getFanCount());
+		return obj_perfil_usuario;
+	}
+
+}
